@@ -36,11 +36,13 @@ export class AuthService {
         password: hashedPassword,
       });
 
-      const fileName = `${Date.now()}${path.extname(avatar.originalname)}`;
-      const filePath = `${__dirname}/../../uploads/${fileName}`;
-      fs.writeFileSync(filePath, avatar.buffer);
-      user.avatar = fileName;
-      await user.save();
+      if (avatar) {
+        const fileName = `${Date.now()}${path.extname(avatar.originalname)}`;
+        const filePath = `${__dirname}/../../uploads/${fileName}`;
+        fs.writeFileSync(filePath, avatar.buffer);
+        user.avatar = fileName;
+        await user.save();
+      }
 
       const userObject = user.toObject();
       delete userObject.password;
