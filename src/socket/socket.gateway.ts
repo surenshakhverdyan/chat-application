@@ -11,11 +11,11 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { Model } from 'mongoose';
-import { ObjectId } from 'mongodb';
 
 import { WsGuard } from 'src/guards';
 import { Chat, ChatRoom } from './schemas';
 import { JoinDto, MessageDto } from './dto';
+import { User } from 'src/users/schemas/user.schema';
 
 @UseGuards(WsGuard)
 @UsePipes(new ValidationPipe())
@@ -27,6 +27,7 @@ export class SocketGateway {
   constructor(
     @InjectModel(ChatRoom.name) private chatRoomModel: Model<ChatRoom>,
     @InjectModel(Chat.name) private chatModel: Model<Chat>,
+    @InjectModel(User.name) private userModel: Model<User>,
     private readonly config: ConfigService,
     private jwtService: JwtService,
   ) {}
@@ -77,18 +78,16 @@ export class SocketGateway {
   ): Promise<void> {
     const token = socket.handshake.headers.authorization.split(' ')[1];
     const userId = this.extractSubFromToken(token);
-    const id = new ObjectId(userId);
+    const user = await this.userModel.findById(userId);
     const chat = await this.chatModel.findOne({ room: dto.room });
 
     if (!chat) {
       await this.chatModel.create({
         room: dto.room,
-        messages: { user: id, message: dto.message },
+        messages: { user: user._id, message: dto.message },
       });
     } else {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      chat.messages.push({ user: id, message: dto.message });
+      chat.messages.push({ user: user, message: dto.message });
       await chat.save();
     }
 
