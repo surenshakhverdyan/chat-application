@@ -86,6 +86,8 @@ export class SocketGateway {
         messages: { user: id, message: dto.message },
       });
     } else {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       chat.messages.push({ user: id, message: dto.message });
       await chat.save();
     }
