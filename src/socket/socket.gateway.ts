@@ -38,7 +38,7 @@ export class SocketGateway {
   async handleJoinRoom(
     @ConnectedSocket() socket: Socket,
     @MessageBody() dto: JoinDto,
-  ): Promise<void> {
+  ): Promise<Chat | void> {
     const token = socket.handshake.headers.authorization.split(' ')[1];
     const userId = this.extractSubFromToken(token);
 
@@ -59,6 +59,15 @@ export class SocketGateway {
     }
 
     this.server.socketsJoin(roomId);
+
+    const conversation = await this.chatModel
+      .findOne({ room: roomId })
+      .populate('messages.user', 'name')
+      .exec();
+
+    if (conversation) {
+      return conversation;
+    }
   }
 
   @SubscribeMessage('message')
@@ -72,7 +81,7 @@ export class SocketGateway {
     const chat = await this.chatModel.findOne({ room: dto.room });
 
     if (!chat) {
-      this.chatModel.create({
+      await this.chatModel.create({
         room: dto.room,
         messages: { user: id, message: dto.message },
       });
