@@ -1,5 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Types, Schema as MongooseSchema } from 'mongoose';
+import { Schema as MongooseSchema } from 'mongoose';
+
+import { User } from 'src/users/schemas/user.schema';
+
+interface ChatMessage {
+  user: MongooseSchema.Types.ObjectId | User;
+  message: string;
+}
 
 @Schema({ timestamps: true })
 export class Chat {
@@ -8,26 +15,21 @@ export class Chat {
     type: MongooseSchema.Types.ObjectId,
     ref: 'ChatRoom',
   })
-  room: Types.ObjectId;
+  room: MongooseSchema.Types.ObjectId;
 
   @Prop({
     required: true,
-    messages: [
+    type: [
       {
         user: {
           type: MongooseSchema.Types.ObjectId,
           ref: 'User',
-          message: String,
         },
+        message: String,
       },
     ],
   })
-  messages: [
-    {
-      user: Types.ObjectId;
-      message: string;
-    },
-  ];
+  messages: Array<ChatMessage>;
 }
 
 export const ChatSchema = SchemaFactory.createForClass(Chat);
