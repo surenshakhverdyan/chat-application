@@ -1,0 +1,273 @@
+{
+	"info": {
+		"_postman_id": "d15ce5ff-d9d7-45d7-bab7-764efd04b317",
+		"name": "chat-application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25301126"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "refresh-token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWE2Mjk4NDQyNDc3MGM1Zjk0OWQzODgiLCJyb2xlcyI6WyJ1c2VyIl0sImlhdCI6MTcwNTM4ODQ1MCwiZXhwIjoxNzA1NDc0ODUwfQ.x0_atUn_fOa4RcIzYOTXpq4qjmu23CU1tPaTX6RvFF4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "refresh",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWE2Mjk4NDQyNDc3MGM1Zjk0OWQzODgiLCJyb2xlcyI6WyJ1c2VyIl0sImlhdCI6MTcwNTM4ODQ1MCwiZXhwIjoxNzA1OTkzMjUwfQ.mEFF3Oq99zBc52PtybnEFx5kn_dwjwXVZRdjXrNiPLw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/auth/refresh-token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sign-up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Test Name",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test@email.com",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/wppc-0015/Pictures/Screenshots/Screenshot from 2024-01-12 16-22-43.png"
+								},
+								{
+									"key": "password",
+									"value": "156354111",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/auth/sign-up",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"auth",
+								"sign-up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sign-in",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@email.com\",\n    \"password\": \"156354111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/auth/sign-in",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"auth",
+								"sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@email.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/auth/forgot-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"auth",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-password/:token",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"156354113\",\n    \"passwordConfirmation\": \"156354113\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/auth/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWE2Mjk4NDQyNDc3MGM1Zjk0OWQzODgiLCJpYXQiOjE3MDUzODg4OTgsImV4cCI6MTcwNTM5MjQ5OH0.ebZPOmzR0-6qVe_U3m6Z9FnhVKgoCtajm1Zxg5xc9K4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"auth",
+								"reset-password",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWE2Mjk4NDQyNDc3MGM1Zjk0OWQzODgiLCJpYXQiOjE3MDUzODg4OTgsImV4cCI6MTcwNTM5MjQ5OH0.ebZPOmzR0-6qVe_U3m6Z9FnhVKgoCtajm1Zxg5xc9K4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "update-password",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWE2Mjk4NDQyNDc3MGM1Zjk0OWQzODgiLCJyb2xlcyI6WyJ1c2VyIl0sImlhdCI6MTcwNTM4ODQ1MCwiZXhwIjoxNzA1NDc0ODUwfQ.x0_atUn_fOa4RcIzYOTXpq4qjmu23CU1tPaTX6RvFF4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"156354111\",\n    \"newPassword\": \"156354113\",\n    \"passwordConfirmation\": \"156354113\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/users/update-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"users",
+						"update-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWE2Mjk4NDQyNDc3MGM1Zjk0OWQzODgiLCJyb2xlcyI6WyJ1c2VyIl0sImlhdCI6MTcwNTM4ODQ1MCwiZXhwIjoxNzA1NDc0ODUwfQ.x0_atUn_fOa4RcIzYOTXpq4qjmu23CU1tPaTX6RvFF4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Test Name",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "test@email.com",
+							"type": "text"
+						},
+						{
+							"key": "avatar",
+							"type": "file",
+							"src": "/home/wppc-0015/Pictures/Screenshots/Screenshot from 2024-01-12 16-22-43.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3001/users/update-user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"users",
+						"update-user"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
