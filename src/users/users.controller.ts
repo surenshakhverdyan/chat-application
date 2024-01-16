@@ -10,11 +10,11 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 import { UsersService } from './users.service';
 import { UpdatePasswordDto, UpdateUserDto } from './dto';
 import { AuthGuard } from 'src/guards';
-import { FileInterceptor } from '@nestjs/platform-express';
 
 @UseGuards(AuthGuard)
 @Controller('users')
