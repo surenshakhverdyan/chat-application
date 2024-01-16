@@ -268,6 +268,36 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "delete-user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWE2Mjk4NDQyNDc3MGM1Zjk0OWQzODgiLCJyb2xlcyI6WyJ1c2VyIl0sImlhdCI6MTcwNTQwMTMxNywiZXhwIjoxNzA1NDg3NzE3fQ.0oPQrin23_u4qfX5mznclBQ0Bgr4wt26owFLr2mrbHA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/users/delete-user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"users",
+						"delete-user"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
