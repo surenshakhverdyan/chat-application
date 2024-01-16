@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   FileTypeValidator,
   Headers,
   ParseFilePipe,
@@ -15,11 +16,11 @@ import { UpdatePasswordDto, UpdateUserDto } from './dto';
 import { AuthGuard } from 'src/guards';
 import { FileInterceptor } from '@nestjs/platform-express';
 
+@UseGuards(AuthGuard)
 @Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
 
-  @UseGuards(AuthGuard)
   @Patch('update-password')
   updatePassword(
     @Headers('Authorization') authToken: string,
@@ -28,7 +29,6 @@ export class UsersController {
     return this.userService.updatePassword(authToken, dto);
   }
 
-  @UseGuards(AuthGuard)
   @Patch('update-user')
   @UseInterceptors(FileInterceptor('avatar'))
   updateUser(
@@ -43,5 +43,10 @@ export class UsersController {
     avatar: Express.Multer.File,
   ): Promise<boolean> {
     return this.userService.updateUser(authToken, dto, avatar);
+  }
+
+  @Delete('delete-user')
+  deleteUser(@Headers('Authorization') authToken: string): Promise<void> {
+    return this.userService.deleteUser(authToken);
   }
 }

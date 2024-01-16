@@ -79,4 +79,17 @@ export class UsersService {
 
     return true;
   }
+
+  async deleteUser(authToken: string): Promise<void> {
+    const token = authToken.split(' ')[1];
+    const { sub } = await this.jwtService.verify(token, {
+      secret: this.config.get('JWT_AUTH_SECRET'),
+    });
+
+    const user = await this.userModel.findByIdAndDelete(sub);
+
+    if (user.avatar) {
+      fs.rmSync(`${__dirname}/../../uploads/${user.avatar}`);
+    }
+  }
 }
