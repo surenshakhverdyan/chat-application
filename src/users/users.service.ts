@@ -86,10 +86,14 @@ export class UsersService {
       secret: this.config.get('JWT_AUTH_SECRET'),
     });
 
-    const user = await this.userModel.findByIdAndDelete(sub);
+    try {
+      const user = await this.userModel.findByIdAndDelete(sub);
 
-    if (user.avatar) {
-      fs.rmSync(`${__dirname}/../../uploads/${user.avatar}`);
+      if (user.avatar) {
+        fs.rmSync(`${__dirname}/../../uploads/${user.avatar}`);
+      }
+    } catch {
+      throw new HttpException('User not found', 404);
     }
   }
 }
