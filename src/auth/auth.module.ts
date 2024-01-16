@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { User, UserSchema } from 'src/users/schemas/user.schema';
+import { ResetPasswordTemplate } from './templates/reset-password.template';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { User, UserSchema } from 'src/users/schemas/user.schema';
       },
     ]),
   ],
-  providers: [AuthService, JwtService],
+  providers: [AuthService, JwtService, ResetPasswordTemplate],
   controllers: [AuthController],
 })
 export class AuthModule {}

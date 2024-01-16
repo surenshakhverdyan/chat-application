@@ -12,12 +12,14 @@ import * as bcrypt from 'bcrypt';
 import { User } from 'src/users/schemas/user.schema';
 import { ResetPasswordDto, SignInDto, SignUpDto } from './dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordTemplate } from './templates/reset-password.template';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private jwtService: JwtService,
+    private resetPasswordTemplate: ResetPasswordTemplate,
     private readonly config: ConfigService,
     private readonly mailerService: MailerService,
   ) {}
@@ -105,14 +107,15 @@ export class AuthService {
       secret: this.config.get('JWT_FORGOT_PASSWORD_SECRET'),
       expiresIn: '1h',
     });
+    const resetPasswordLink = this.resetPasswordTemplate.getTemplate(
+      `${this.config.get('BASE_URL')}/reset-password/${resetPasswordToken}`,
+    );
 
     const email = await this.mailerService.sendMail({
       from: this.config.get('EMAIL_ADDRESS'),
       to: dto.email,
       subject: 'Reset password',
-      text: `${this.config.get(
-        'BASE_URL',
-      )}/reset-password/${resetPasswordToken}`,
+      html: resetPasswordLink,
     });
 
     if (!(email.response.split(' ')[0] === '250')) return false;
