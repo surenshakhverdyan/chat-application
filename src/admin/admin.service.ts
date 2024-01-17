@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Chat, ChatRoom } from 'src/socket/schemas';
 
 import { User } from 'src/users/schemas/user.schema';
 import { DeleteChatDto, DeleteUserDto } from './dto';
+import { Role } from 'src/users/enums/role.enum';
 
 @Injectable()
 export class AdminService {
@@ -28,7 +29,10 @@ export class AdminService {
   }
 
   async deleteUser(dto: DeleteUserDto): Promise<boolean> {
-    await this.userModel.findByIdAndDelete(dto.userId);
+    const user = await this.userModel.findById(dto.userId);
+    if (user.roles.includes(Role.Admin))
+      throw new HttpException(`You cna't delete the admin account`, 403);
+    await user.deleteOne();
     return true;
   }
 
