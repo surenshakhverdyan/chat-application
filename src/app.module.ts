@@ -19,6 +19,7 @@ import { PublicModule } from './public/public.module';
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => ({
         uri: config.get<string>('MONGO_URI'),
+        dbName: config.get<string>('DB_NAME'),
       }),
     }),
     MailerModule.forRootAsync({

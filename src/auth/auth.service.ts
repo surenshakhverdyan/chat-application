@@ -59,7 +59,7 @@ export class AuthService {
       return { user: userObject, accessToken, refreshToken };
     } catch (error: any) {
       if (error.code === 11000)
-        throw new HttpException('The email address allready taken', 403);
+        throw new HttpException('The email address already taken', 403);
       throw new HttpException(error.message, 500);
     }
   }
